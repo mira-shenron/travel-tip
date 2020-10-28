@@ -27,7 +27,12 @@ window.onload = () => {
 document.querySelector('.btn-my-location').addEventListener('click', (ev) => {
     console.log('Aha!', ev.target);
     panTo(35.6895, 139.6917);
-
+})
+document.querySelector('.btn-search').addEventListener('click', (ev) => {
+    ev.preventDefault();
+    console.log('searching');
+    const place = document.querySelector('input[name=location-search]').value
+    if (place === '') return;
 })
 
 
@@ -41,9 +46,9 @@ export function initMap(lat = 32.0749831, lng = 34.9120554) {
                     center: { lat, lng },
                     zoom: 15
                 })
-                gMap.addListener('click', function(event){
-                    console.log(event)
-                })
+            gMap.addListener('click', function(event) {
+                console.log(event)
+            })
             console.log('Map!', gMap);
         })
 }

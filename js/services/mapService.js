@@ -10,3 +10,15 @@ function getLocs() {
         }, 2000)
     });
 }
+
+function createLocation(name, lat, lng) {
+    return {
+        id: makeId(),
+        name,
+        lat,
+        lng,
+        weather: '',
+        createdAt: new Date(),
+        updatedAt: ''
+    }
+}
