@@ -5,6 +5,7 @@ console.log('Main!');
 
 mapService.getLocs()
     .then(locs => console.log('locs', locs))
+mapService.setLocs()
 
 window.onload = () => {
     initMap()
@@ -33,6 +34,12 @@ document.querySelector('.btn-my-location').addEventListener('click', (ev) => {
         };
         panTo(ev.coords.latitude, ev.coords.longitude);
     });
+})
+
+document, querySelector('.btn-my-location').addEventListener('click', () => {
+    const Place = document.querySelector('input[name="location-search"').value
+    if (place === '') return;
+    getPlaceApi();
 })
 
 
