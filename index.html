@@ -9,6 +9,32 @@
 </head>
 
 <body>
+    <header>
+        <h1>TravelTip</h1>
+        <nav>
+            <form>
+                <input type="text" name="location-search">
+                <button>Go</button>
+            </form>
+            <button class="btn btn-my-location">My Location</button>
+        </nav>
+    </header>
+
+    <div class="location-container">
+        <h3>Location: <span></span></h3>
+        <button>Copy Location</button>
+    </div>
+
+    <div class="map-container">
+        <div id="map" style="width: 100%; height: 400px;"></div>
+
+
+    </div>
+
+
+
+    <script type="module" src="js/services/mapService.js"></script>
+    <script type="module" src="js/controller.js"></script>
 
 </body>
 
