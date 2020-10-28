@@ -1,6 +1,9 @@
 import { mapService } from './services/mapService.js'
 
 var gMap;
+var gLatReceived;
+var gLngReceived;
+
 console.log('Main!');
 
 mapService.getLocs()
@@ -8,7 +11,10 @@ mapService.getLocs()
 mapService.setLocs()
 
 window.onload = () => {
-    initMap()
+    const parameters = new URLSearchParams(window.location.search);
+    const [latParam, lngParam] = prepareParams(parameters.get('lat'),parameters.get('lng'));
+
+    initMap(latParam,lngParam)
         .then(() => {
 
             addMarker({ lat: 32.0749831, lng: 34.9120554 });
@@ -33,7 +39,16 @@ window.onload = () => {
     })
 
     document.querySelector('.copy-loc').addEventListener('click', (ev) => {
+        var loc = mapService.getCurrLoc();
 
+        //real link
+        // document.querySelector("#copy-link").innerText = `https://mira-shenron.github.io/travel-tip/index.html?lat=${loc.lat}&lng=${loc.lng}`;
+
+        //for debugging
+        document.querySelector("#copy-link").innerText = `http://127.0.0.1:5501/index.html?lat=${loc.lat}&lng=${loc.lng}`;
+        
+        document.querySelector("#copy-link").select();
+        document.execCommand("copy");
     })
 }
 
@@ -49,8 +64,9 @@ document.querySelector('.btn-search').addEventListener('click', (ev) => {
 })
 
 
-export function initMap(lat = 32.0749831, lng = 34.9120554) {
+export function initMap(lat, lng) {
     console.log('InitMap');
+
     return _connectGoogleApi()
         .then(() => {
             console.log('google available');
@@ -106,4 +122,16 @@ function _connectGoogleApi() {
         elGoogleApi.onload = resolve;
         elGoogleApi.onerror = () => reject('Google script failed to load')
     })
+}
+
+function prepareParams(latReceived,lngReceived){
+    //some default location if not received 
+    var lat = 32.0749831;
+    var lng = 34.9120554;
+
+    if (latReceived && lngReceived) {
+        lat = parseFloat(latReceived);
+        lng = parseFloat(lngReceived)
+    }
+    return [parseFloat(lat), parseFloat(lng)];
 }
