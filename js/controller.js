@@ -27,8 +27,13 @@ window.onload = () => {
     document.querySelector('.btn-my-location').addEventListener('click', (ev) => {
         console.log('Aha!', ev.target);
         getPosition().then(res => {
+            mapService.addLocation('myLocation', res.coords.latitude, res.coords.longitude);
             panTo(res.coords.latitude, res.coords.longitude);
         });
+    })
+
+    document.querySelector('.copy-loc').addEventListener('click', (ev) => {
+        
     })
 }
 
@@ -55,8 +60,8 @@ export function initMap(lat = 32.0749831, lng = 34.9120554) {
                         lat: event.latLng.lat(),
                         lng: event.latLng.lng()
                     }
-                    
-                    // addPlace(name, myLatlng); ??should add this place to locations table
+
+                    mapService.addLocation('myLocation', event.latLng.lat(), event.latLng.lng());
                     gMap.setCenter(myLatlng);
                 })
                 console.log('Map!', gMap);
