@@ -5,13 +5,13 @@ import { utils } from './utils-service.js'
 // import axios from '../../lib/axioss.js'
 
 const LOCS_KEY = 'locsDB'
-const currLoc;
+var currLoc;
 
 export const mapService = {
     getLocs: getLocs,
     addLocation,
     setLocs,
-    getPlaceApi,
+    getPlaceDataByName,
     getCurrLoc,
 }
 var locs;
@@ -63,7 +63,7 @@ function createLocation(name, lat, lng) {
 //     return fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${place}&key=AIzaSyBCHE8wlLLHaFn9_WPzvZ7R0yrLsZDDRvA`, true)
 //         .then(res => res.json());
 // }
-function getPlaceApi(place) {
+function getPlaceDataByName(place) {
     return axios(`https://maps.googleapis.com/maps/api/geocode/json?address=${place}&key=AIzaSyBCHE8wlLLHaFn9_WPzvZ7R0yrLsZDDRvA`)
         .then(res => ({
             name: place,
