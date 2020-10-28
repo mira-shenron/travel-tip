@@ -26,13 +26,13 @@ window.onload = () => {
 
 document.querySelector('.btn-my-location').addEventListener('click', (ev) => {
     console.log('Aha!', ev.target);
-    panTo(35.6895, 139.6917);
-})
-document.querySelector('.btn-search').addEventListener('click', (ev) => {
-    ev.preventDefault();
-    console.log('searching');
-    const place = document.querySelector('input[name=location-search]').value
-    if (place === '') return;
+    navigator.geolocation.getCurrentPosition((ev) => {
+        var currLoc = {
+            lat: ev.coords.latitude,
+            lng: ev.coords.longitude
+        };
+        panTo(ev.coords.latitude, ev.coords.longitude);
+    });
 })
 
 
@@ -47,7 +47,13 @@ export function initMap(lat = 32.0749831, lng = 34.9120554) {
                     zoom: 15
                 })
             gMap.addListener('click', function(event) {
-                console.log(event)
+                var myLatlng = {
+                        lat: event.latLng.lat(),
+                        lng: event.latLng.lng()
+                    }
+                    // var name = prompt('Enter place name:');
+                    // addPlace(name, myLatlng); ??should add this place to locations table
+                gMap.setCenter(myLatlng);
             })
             console.log('Map!', gMap);
         })
