@@ -1,6 +1,6 @@
 'use stict'
 
-import { storageService } from './storage-services'
+import { storageService } from './storage-services.js'
 
 const LOCS_KEY = 'locsDB'
 
@@ -45,6 +45,7 @@ function createLocation(name, lat, lng) {
     }
 }
 
-function getPlaceApi() {
-
+function getPlaceApi(place) {
+    return fetch(`//maps.googleapis.com/maps/api/place/findplacefromtext/json?input=Museum%20of%20Contemporary%20Art%20${place}&inputtype=textquery&fields=place_id&key=AIzaSyBCHE8wlLLHaFn9_WPzvZ7R0yrLsZDDRvA`)
+        .then(res => res.json())
 }
