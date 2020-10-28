@@ -5,6 +5,7 @@ console.log('Main!');
 
 mapService.getLocs()
     .then(locs => console.log('locs', locs))
+mapService.setLocs()
 
 window.onload = () => {
     initMap()
@@ -30,6 +31,13 @@ window.onload = () => {
         });
     })
 }
+
+document, querySelector('.btn-my-location').addEventListener('click', () => {
+    const Place = document.querySelector('input[name="location-search"').value
+    if (place === '') return;
+    getPlaceApi(Place)
+        .then(console.log());
+})
 
 
 export function initMap(lat = 32.0749831, lng = 34.9120554) {
