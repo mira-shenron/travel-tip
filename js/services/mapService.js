@@ -6,6 +6,9 @@ const LOCS_KEY = 'locsDB'
 
 export const mapService = {
     getLocs: getLocs,
+    addLocation,
+    setLocs,
+    getPlaceApi,
 }
 var locs;
 // var locs = [{ lat: 11.22, lng: 22.11 }]
@@ -40,4 +43,8 @@ function createLocation(name, lat, lng) {
         createdAt: new Date(),
         updatedAt: ''
     }
+}
+
+function getPlaceApi() {
+
 }

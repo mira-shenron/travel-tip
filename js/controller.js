@@ -39,7 +39,8 @@ document.querySelector('.btn-my-location').addEventListener('click', (ev) => {
 document, querySelector('.btn-my-location').addEventListener('click', () => {
     const Place = document.querySelector('input[name="location-search"').value
     if (place === '') return;
-    getPlaceApi();
+    getPlaceApi(Place)
+        .then(console.log());
 })
 
 
