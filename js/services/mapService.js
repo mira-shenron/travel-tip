@@ -1,14 +1,18 @@
 'use stict'
 
 import { storageService } from './storage-services.js'
+import { utils } from './utils-service.js'
+// import axios from '../../lib/axioss.js'
 
 const LOCS_KEY = 'locsDB'
+const currLoc;
 
 export const mapService = {
     getLocs: getLocs,
     addLocation,
     setLocs,
     getPlaceApi,
+    getCurrLoc,
 }
 var locs;
 // var locs = [{ lat: 11.22, lng: 22.11 }]
@@ -26,16 +30,26 @@ function setLocs() {
     if (!locs || locs.laength === 0) locs = [];
 }
 
+function getCurrLoc() {
+    return currLoc;
+}
+
+function setCurrLoc(id) {
+    currLoc = locs.find(function(loc) {
+        return (loc.id === id)
+    })
+}
+
 function addLocation(name, lat, lng) {
     const loc = createLocation(name, lat, lng);
     locs.push(loc);
+    setCurrLoc(loc.id);
     storageService.saveInLocalStorage(LOCS_KEY, locs);
-
 }
 
 function createLocation(name, lat, lng) {
     return {
-        id: makeId(),
+        id: utils.makeId(),
         name,
         lat,
         lng,
@@ -45,7 +59,15 @@ function createLocation(name, lat, lng) {
     }
 }
 
+// function getPlaceApi(place) {
+//     return fetch(`https://maps.googleapis.com/maps/api/geocode/json?address=${place}&key=AIzaSyBCHE8wlLLHaFn9_WPzvZ7R0yrLsZDDRvA`, true)
+//         .then(res => res.json());
+// }
 function getPlaceApi(place) {
-    return fetch(`//maps.googleapis.com/maps/api/place/findplacefromtext/json?input=Museum%20of%20Contemporary%20Art%20${place}&inputtype=textquery&fields=place_id&key=AIzaSyBCHE8wlLLHaFn9_WPzvZ7R0yrLsZDDRvA`)
-        .then(res => res.json())
+    return axios(`https://maps.googleapis.com/maps/api/geocode/json?address=${place}&key=AIzaSyBCHE8wlLLHaFn9_WPzvZ7R0yrLsZDDRvA`)
+        .then(res => ({
+            name: place,
+            lat: res.data.results[0].geometry.location.lat,
+            lng: res.data.results[0].geometry.location.lng
+        }));
 }
